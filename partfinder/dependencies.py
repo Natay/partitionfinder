@@ -25,9 +25,9 @@ for dep in DEPENDENCIES:
         imp.find_module(dep)
     except ImportError:
         print('\n\n\n **** ERROR **** \n')
-        print('Could not find the dependency %s, please check that you have '
+        print(('Could not find the dependency %s, please check that you have '
 	    	  'followed the installation instructions in the manual '
-	    	  ' and try again.' %(dep))
+	    	  ' and try again.' %(dep)))
         print('\nPartitionFinder 2 (unlike PartitionFinder 1) requires a few'
         	  ' other Python packages to work. All of these '
 			  'can be installed very easily, in a single click, by installing '

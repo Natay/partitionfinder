@@ -16,7 +16,7 @@ organise_tests = {
 
 def pytest_generate_tests(metafunc):
     # This function feeds the output of the above function into the tests below
-    for test_type, folders in organise_tests.items():
+    for test_type, folders in list(organise_tests.items()):
         if test_type in metafunc.fixturenames:
             metafunc.parametrize(test_type, folders)
 

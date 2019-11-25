@@ -15,7 +15,7 @@
 # conditions, using PartitionFinder implies that you agree with those licences
 # and conditions as well.
 
-import logtools
+from . import logtools
 log = logtools.get_logger()
 
 import time
@@ -24,15 +24,15 @@ import numpy as np
 from sklearn.cluster import KMeans
 from sklearn.preprocessing import scale
 from collections import defaultdict
-from alignment import SubsetAlignment
-import util
-from config import the_config
-import entropy
+from .alignment import SubsetAlignment
+from . import util
+from .config import the_config
+from . import entropy
 import sys
-from util import PartitionFinderError
-import morph_tiger as mt
+from .util import PartitionFinderError
+from . import morph_tiger as mt
 
-import subset_ops
+from . import subset_ops
 
 # You can run kmeans in parallel, specify n_jobs as -1 and it will run
 # on all cores available.

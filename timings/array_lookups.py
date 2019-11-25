@@ -63,7 +63,7 @@ def method4(dists, N):
     closest = dists.argsort()[:N]
     n = np.ceil(np.sqrt(2* len(dists)))
     ti = np.triu_indices(n, 1)
-    r  = zip(ti[0][closest] + 1, ti[1][closest] + 1)
+    r  = list(zip(ti[0][closest] + 1, ti[1][closest] + 1))
     return r
 
 def method5(dists, N):
@@ -101,7 +101,7 @@ def method8(dists, N):
     closest = heapq.nsmallest(N, dists)
     n = np.ceil(np.sqrt(2* len(dists)))
     ti = np.triu_indices(n, 1)
-    r  = zip(ti[0][closest] + 1, ti[1][closest] + 1)
+    r  = list(zip(ti[0][closest] + 1, ti[1][closest] + 1))
     return r
 
 
@@ -116,7 +116,7 @@ def method9(dists, N, insort=insort):
 
     n = np.ceil(np.sqrt(2* len(dists)))
     ti = np.triu_indices(n, 1)
-    r  = zip(ti[0][closest] + 1, ti[1][closest] + 1)
+    r  = list(zip(ti[0][closest] + 1, ti[1][closest] + 1))
     return r
 
 def method10(dists, N):
@@ -131,7 +131,7 @@ def method10(dists, N):
     closest = [np.where(dists==x) for x in mins]
     n = np.ceil(np.sqrt(2* len(dists)))
     ti = np.triu_indices(n, 1)
-    r  = zip(ti[0][closest] + 1, ti[1][closest] + 1)
+    r  = list(zip(ti[0][closest] + 1, ti[1][closest] + 1))
     return r
 
 
@@ -148,7 +148,7 @@ def method11(dists, N):
     closest = [np.where(dists==x) for x in mins]
     n = np.ceil(np.sqrt(2* len(dists)))
     ti = np.triu_indices(n, 1)
-    r  = zip(ti[0][closest] + 1, ti[1][closest] + 1)
+    r  = list(zip(ti[0][closest] + 1, ti[1][closest] + 1))
     return r
 
 

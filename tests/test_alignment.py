@@ -1,7 +1,7 @@
 import pytest
 import fnmatch
 import os
-from StringIO import StringIO
+from io import StringIO
 from partfinder.alignment import Alignment, SubsetAlignment, AlignmentError
 
 HERE = os.path.abspath(os.path.dirname(__file__))

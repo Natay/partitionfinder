@@ -15,13 +15,13 @@
 # conditions, using PartitionFinder implies that you agree with those licences
 # and conditions as well.
 
-import logtools
+from . import logtools
 log = logtools.get_logger()
 
-from alignment import Alignment
+from .alignment import Alignment
 import numpy as np
-from config import the_config
-from util import PartitionFinderError
+from .config import the_config
+from .util import PartitionFinderError
 
 # defining a new function 'entropy_calc' which takes as input a 1D array p
 # copied from here: http://nbviewer.ipython.org/url/atwallab.cshl.edu/teaching/QBbootcamp3.ipynb

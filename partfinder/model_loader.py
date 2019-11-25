@@ -15,13 +15,13 @@
 # conditions, using PartitionFinder implies that you agree with those licences
 # and conditions as well.
 
-import logtools
+from . import logtools
 import pandas as pd
 import os
 import collections
 
 log = logtools.get_logger()
-from util import PartitionFinderError
+from .util import PartitionFinderError
 
 _available_lists = ["ALL", # all models, excluding those with base frequencies estimated by ML and protein GTR models
                     "ALLX", # all models, including those with base frequencies estimated by ML and protein GTR models
@@ -186,7 +186,7 @@ def expand_model_list(the_config):
 
 def check_for_duplicates(models):
     # model lists shouldn't contain duplicated models
-    duplicates = [x for x, y in collections.Counter(models).items() if y > 1]
+    duplicates = [x for x, y in list(collections.Counter(models).items()) if y > 1]
     if len(duplicates)>0:
         log.error("""There was a problem loading your list of models,
                   the following models seem to be duplicated: %s"""

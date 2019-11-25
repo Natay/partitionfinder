@@ -15,18 +15,18 @@
 # conditions, using PartitionFinder implies that you agree with those licences
 # and conditions as well.
 
-import logtools
+from . import logtools
 log = logtools.get_logger()
 
 import logging
 import os
 import fnmatch
-import scheme
-import subset
-import parser
-import util
-import progress
-import cPickle as pickle
+from . import scheme
+from . import subset
+from . import parser
+from . import util
+from . import progress
+import pickle as pickle
 
 class ConfigurationError(util.PartitionFinderError):
     pass
@@ -96,8 +96,6 @@ class Configuration(object):
                 log.error("RAxML must be used for morphological data. Please add '--raxml' to your commandline")
                 raise ConfigurationError
 
-
-
         # Import the right processor
         self.processor = __import__(phylogeny_program.lower(), globals())
 
@@ -128,7 +126,7 @@ class Configuration(object):
 
         # Set the defaults into the class. These can be reset by calling
         # set_option(...)
-        for o, v in self.options.items():
+        for o, v in list(self.options.items()):
             # Could call self.set_option here -- but it might confuse users
             setattr(self, o, v[0])
 

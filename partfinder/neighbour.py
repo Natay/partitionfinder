@@ -15,14 +15,14 @@
 # conditions, using PartitionFinder implies that you agree with those licences
 # and conditions as well.
 
-import subset_ops
-import scheme
+from . import subset_ops
+from . import scheme
 import numpy as np
 import scipy.spatial.distance
 import itertools
-from util import PartitionFinderError
+from .util import PartitionFinderError
 
-import logtools
+from . import logtools
 log = logtools.get_logger()
 
 
@@ -39,7 +39,7 @@ def get_ranked_list(distance_matrix, subsets, N):
     closest = distance_matrix.argsort()[:N]
     n = len(subsets)
     ti = np.triu_indices(n, 1)
-    r  = zip(ti[0][closest] + 1, ti[1][closest] + 1)
+    r  = list(zip(ti[0][closest] + 1, ti[1][closest] + 1))
 
     # and we look up all the subsets that correspond to each distance
     # and add it to our ordered list of subset lists
@@ -211,7 +211,7 @@ def update_c_matrix(c_matrix, sub_tuples, subsets, diffs):
     if len(c_matrix.shape) == 1:
         c_matrix = scipy.spatial.distance.squareform(c_matrix)
 
-    for t, diff in itertools.izip(sub_tuples, diffs):
+    for t, diff in zip(sub_tuples, diffs):
         old_subs = t[1]
         i = subsets.index(old_subs[0])
         j = subsets.index(old_subs[1])

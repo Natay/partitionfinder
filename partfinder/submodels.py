@@ -15,7 +15,8 @@
 # conditions, using PartitionFinder implies that you agree with those licences
 # and conditions as well.
 
-import logtools
+from . import logtools
+from functools import reduce
 log = logtools.get_logger()
 
 import math
@@ -56,7 +57,7 @@ def submodel_iterator(pat, current, maxn):
                     yield b
 
 def a_choose_b(n,k):
-    return reduce(lambda a,b: a*(n-b)/(b+1),xrange(k),1)
+    return reduce(lambda a,b: a*(n-b)/(b+1),range(k),1)
 
 def count_relaxed_clustering_subsets(N, cluster_percent, cluster_max):
     #startscheme    
@@ -69,7 +70,7 @@ def count_relaxed_clustering_subsets(N, cluster_percent, cluster_max):
     cumsum = start_scheme+step_1
 
     #now for the rest
-    for i in reversed(xrange(N)):
+    for i in reversed(range(N)):
 
         # once we get to the all combined scheme we can stop  
         if i == 1:
@@ -102,7 +103,7 @@ def count_relaxed_clustering_schemes(N, cluster_percent, cluster_max):
 
     cumsum = start_scheme+step_1
     #now for the rest
-    for i in reversed(xrange(N)):
+    for i in reversed(range(N)):
         # each subsequent step is cluster_percent of i choose 2  
         if i == 1:
             break

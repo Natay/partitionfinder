@@ -15,13 +15,13 @@
 # conditions, using PartitionFinder implies that you agree with those licences
 # and conditions as well.
 
-import logtools
+from . import logtools
 log = logtools.get_logger()
 
-import subset_ops
-import submodels
+from . import subset_ops
+from . import submodels
 
-from util import PartitionFinderError, get_aic, get_aicc, get_bic
+from .util import PartitionFinderError, get_aic, get_aicc, get_bic
 
 
 class SchemeError(PartitionFinderError):
@@ -149,7 +149,7 @@ class SchemeSet(object):
         return len(self.schemes_by_name)
 
     def __iter__(self):
-        return iter(self.schemes_by_name.itervalues())
+        return iter(self.schemes_by_name.values())
 
 
 def create_scheme(cfg, scheme_name, scheme_description):
@@ -176,7 +176,7 @@ def create_scheme(cfg, scheme_name, scheme_description):
     # We now have what we need to create a subset. Each entry will have a
     # set of values which are the index for the partition
     created_subsets = []
-    for sub_indexes in subs.values():
+    for sub_indexes in list(subs.values()):
         subs_to_merge = [cfg.user_subsets[i] for i in sub_indexes]
         sub = subset_ops.merge_subsets(subs_to_merge)
         created_subsets.append(sub)
@@ -195,7 +195,7 @@ def model_to_scheme(model, scheme_name, cfg):
     # We now have what we need to create a subset. Each entry will have a
     # set of values which are the index for the partition
     created_subsets = []
-    for sub_indexes in subs.values():
+    for sub_indexes in list(subs.values()):
         subs_to_merge = [cfg.user_subsets[i] for i in sub_indexes]
         sub = subset_ops.merge_subsets(subs_to_merge)
         created_subsets.append(sub)
@@ -225,7 +225,7 @@ def generate_all_schemes(cfg):
         # We now have what we need to create a subset. Each entry will have a
         # set of values which are the index for the partition
         created_subsets = []
-        for sub_indexes in subs.values():
+        for sub_indexes in list(subs.values()):
             sub = subset_ops.merge_subsets(
                 [cfg.user_subsets[i] for i in sub_indexes])
             created_subsets.append(sub)

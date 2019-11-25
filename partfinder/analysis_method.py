@@ -15,21 +15,21 @@
 # conditions, using PartitionFinder implies that you agree with those licences
 # and conditions as well.
 
-import logtools
+from . import logtools
 import math
-import scheme
-import submodels
-from analysis import Analysis, AnalysisError
-from alignment import SubsetAlignment
-import neighbour
-import kmeans
-from subset import Subset
-import subset_ops
-import entropy
+from . import scheme
+from . import submodels
+from .analysis import Analysis, AnalysisError
+from .alignment import SubsetAlignment
+from . import neighbour
+from . import kmeans
+from .subset import Subset
+from . import subset_ops
+from . import entropy
 from scipy import spatial
 from scipy.misc import comb
 import numpy as np
-from config import the_config
+from .config import the_config
 
 log = logtools.get_logger()
 
@@ -76,7 +76,7 @@ class StrictClusteringAnalysis(Analysis):
         the_config.progress.begin(scheme_count, subset_count)
 
         # Start with the most partitioned scheme
-        start_description = range(partnum)
+        start_description = list(range(partnum))
         start_scheme = scheme.create_scheme(
             the_config, "start_scheme", start_description)
 
@@ -157,7 +157,7 @@ class GreedyAnalysis(Analysis):
         with logtools.indented(log, "*** Analysing starting scheme ***"):
             the_config.progress.begin(scheme_count, partnum)
             start_scheme = scheme.create_scheme(
-                the_config, "start_scheme", range(partnum))
+                the_config, "start_scheme", list(range(partnum)))
             start_result = self.analyse_scheme(start_scheme)
             start_score = start_result.score
             if not the_config.quick:
@@ -364,7 +364,7 @@ class RelaxedClusteringAnalysis(Analysis):
         with logtools.indented(log, "*** Analysing starting scheme ***"):
             the_config.progress.begin(scheme_count, partnum)
             start_scheme = scheme.create_scheme(
-                the_config, "start_scheme", range(partnum))
+                the_config, "start_scheme", list(range(partnum)))
             start_result = self.analyse_scheme(start_scheme)
             start_score = start_result.score
             if not the_config.quick:
@@ -794,7 +794,7 @@ class KmeansAnalysis(Analysis):
         the_config.progress.begin(1, 1)
 
         # Start with the most partitioned scheme
-        start_description = range(partnum)
+        start_description = list(range(partnum))
         start_scheme = scheme.create_scheme(
             the_config, "start_scheme", start_description)
 
@@ -839,7 +839,7 @@ class KmeansAnalysis(Analysis):
             subs = []
 
             # make a list from the dictionary
-            for vals in split_subs.values():
+            for vals in list(split_subs.values()):
                 subs.extend(vals)
 
 
@@ -902,7 +902,7 @@ class KmeansAnalysis(Analysis):
 
         # now build subsets according to the new sites
         sub_dict = {} # this gives us the subsets to build
-        for k, v in sch_dict.iteritems():
+        for k, v in sch_dict.items():
             sub_dict.setdefault(v, []).append(k)
 
         new_subsets = []

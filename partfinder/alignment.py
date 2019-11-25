@@ -21,11 +21,11 @@
     http://www.atgc-montpellier.fr/phyml/usersguide.php?type=command
 
 """
-import logtools
+from . import logtools
 import os
-from util import PartitionFinderError
+from .util import PartitionFinderError
 import numpy as np
-import cStringIO
+import io
 from itertools import chain
 
 log = logtools.get_logger()
@@ -55,7 +55,7 @@ dna_dict = {
     '?': set(''),
     '-': set(''),
 }
-dna_states = set(chain(*dna_dict.values()))
+dna_states = set(chain(*list(dna_dict.values())))
 amino_dict = {
     'A': set(['Alanine']),
     'R': set(['Arginine']),
@@ -83,7 +83,7 @@ amino_dict = {
     '?': set([]),
     '-': set([])
 }
-amino_states = set(chain(*amino_dict.values()))
+amino_states = set(chain(*list(amino_dict.values())))
 morph_dict = {
     '0': set('0'),
     '1': set('1'),
@@ -98,7 +98,7 @@ morph_dict = {
     '?': set(''),
     '-': set(''),
 }
-morph_states = set(chain(*morph_dict.values()))
+morph_states = set(chain(*list(morph_dict.values())))
 
 class AlignmentError(PartitionFinderError):
     pass
@@ -169,7 +169,7 @@ class AlignmentParser(object):
             # We're looking for 2 bits, species count and bases
             if len(bits) == 2:
                 # Convert them to integers
-                S, C = map(int, bits)
+                S, C = list(map(int, bits))
                 self.species_count = S
                 self.sequence_length = C
                 # We're done!
@@ -353,7 +353,7 @@ class Alignment(object):
             self.parse_stream(stream)
 
     def parse(self, text):
-        stream = cStringIO.StringIO(text)
+        stream = io.StringIO(text)
         self.parse_stream(stream)
 
     def write(self, pth):

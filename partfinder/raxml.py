@@ -15,23 +15,23 @@
 # conditions, using PartitionFinder implies that you agree with those licences
 # and conditions as well.
 
-import logtools
+from . import logtools
 log = logtools.get_logger()
 
 import os
 import sys
 import fnmatch
-import util
-from database import DataLayout, DataRecord
-from reporter import write_raxml_partitions
-from config import the_config
+from . import util
+from .database import DataLayout, DataRecord
+from .reporter import write_raxml_partitions
+from .config import the_config
 
 from pyparsing import (
     Word, Literal, nums, Suppress, ParseException,
     SkipTo, OneOrMore, Regex, restOfLine, Optional
 )
 
-import raxml_models as models
+from . import raxml_models as models
 
 _protein_letters = "ARNDCQEGHILKMFPSTWYV"
 _dna_letters = "ATCG"
@@ -153,7 +153,7 @@ def make_ml_topology(alignment_path, datatype, cmdline_extras, scheme, cpus):
 
     if not os.path.exists(tree_path):
         log.error("RAxML tree topology should be here but can't be be found: '%s'" % (tree_path))
-        raise(util.PartitionFinderError)
+        raise util
     else:
         log.debug("RAxML tree with branch lengths ('%s') looks like this: ", tree_path)
         with open(tree_path, 'r') as fin:
@@ -455,7 +455,7 @@ class Parser(object):
         self.current_block = 1
         try:
             self.root_parser.parseString(text)
-        except ParseException, p:
+        except ParseException as p:
             log.error(str(p))
             raise util.ParseError
 

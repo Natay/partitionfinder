@@ -117,7 +117,7 @@ class SmartLogger(object):
         # Add an extra for the hanging indent
         lines = textwrap.wrap(msg, local_max_width)
         line_iterator = iter(lines)
-        first = line_iterator.next()
+        first = next(line_iterator)
         log_function(spaces + _bullet + first)
         for next_line in line_iterator:
             log_function(spaces + _continuation + next_line)

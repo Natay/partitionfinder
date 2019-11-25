@@ -15,7 +15,7 @@
 # conditions, using PartitionFinder implies that you agree with those licences
 # and conditions as well.
 
-import logtools
+from . import logtools
 log = logtools.get_logger()
 
 from pyparsing import (
@@ -26,12 +26,15 @@ from pyparsing import (
 # Use this for debugging
 # ParserElement.verbose_stacktrace = True
 
-import scheme
-import subset
-import subset_ops
-import config
-import model_loader as mo
-from util import PartitionFinderError
+from . import scheme
+from . import subset
+from . import subset_ops
+from . import model_loader as mo
+from .util import PartitionFinderError
+
+
+class ConfigurationError(PartitionFinderError):
+    pass
 
 
 class ParserError(Exception):
@@ -154,7 +157,7 @@ class Parser(object):
     def set_simple_option(self, text, loc, tokens):
         try:
             self.cfg.set_option(tokens[0], tokens[1])
-        except config.ConfigurationError:
+        except ConfigurationError:
             raise ParserError(text, loc, "Invalid option in .cfg file")
 
     def define_range(self, text, loc, part):
@@ -190,7 +193,7 @@ class Parser(object):
         columns = []
         description = []
         for start, stop, step in part_def.parts:
-            columns.extend(range(start-1, stop, step))
+            columns.extend(list(range(start-1, stop, step)))
 
             # Keep a description of this around
             description.append((start, stop, step))
@@ -264,11 +267,11 @@ class Parser(object):
             self.result = self.config_parser.ignore(pythonStyleComment).\
                 parseString(s)
 
-        except ParserError, p:
+        except ParserError as p:
             log.error(p.format_message())
             raise PartitionFinderError
 
-        except ParseException, p:
+        except ParseException as p:
             log.error("""There was a problem loading your .cfg file, please
                       check and try again""")
             log.error(str(p))
